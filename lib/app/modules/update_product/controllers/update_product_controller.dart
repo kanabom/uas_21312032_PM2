@@ -7,8 +7,6 @@ class UpdateProductController extends GetxController {
 
   late TextEditingController cNama;
   late TextEditingController cNpm;
-  late TextEditingController cJk;
-  late TextEditingController cProdi;
   late TextEditingController cAlamat;
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -19,25 +17,21 @@ Future<DocumentSnapshot<Object?>> getData(String id) async{
   return docDef.get();
 }
 
-void updateProduct (String nama, String npm, String jenis_kelamin, String prodi, String alamat, String id) async{
+void updateProduct (String nama, String npm, String alamat, String id) async{
   DocumentReference productByid = firestore.collection("mahasiswa").doc(id);
 
   try {
     await productByid.update({
-      "nama": nama,
       "npm": npm,
-      "jk" : jenis_kelamin,
-      "program_studi": prodi,
+      "nama": nama,
       "alamat": alamat,
     });
      Get.defaultDialog(
       title: "Berhasil",
       middleText: "Berhasil mengubah data product",
       onConfirm: (){
-        cNama.clear();
         cNpm.clear();
-        cJk.clear();
-        cProdi.clear();
+        cNama.clear();
         cAlamat.clear();
         Get.back();
         Get.back();
@@ -55,20 +49,16 @@ void updateProduct (String nama, String npm, String jenis_kelamin, String prodi,
 
 @override
 void onInit(){
-  cNama = TextEditingController();
   cNpm = TextEditingController();
-  cJk = TextEditingController();
-  cProdi = TextEditingController();
+  cNama = TextEditingController();
   cAlamat = TextEditingController();
   super.onInit();
 }
 
 @override
 void onClose(){
-  cNama.dispose();
   cNpm.dispose();
-  cJk.dispose();
-  cProdi.dispose();
+  cNama.dispose();
   cAlamat.dispose();
   super.onClose();
 }
